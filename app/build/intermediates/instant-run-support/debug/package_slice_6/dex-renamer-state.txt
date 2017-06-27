@@ -1,0 +1,4 @@
+#Tue Jun 27 16:39:34 CST 2017
+base.0=/home/stone/laboratory/leakcanarySample_androidStudio/RecordPlayActivity/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_6
+renamed.0=classes.dex
+file.0=/home/stone/laboratory/leakcanarySample_androidStudio/RecordPlayActivity/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_6/classes.dex

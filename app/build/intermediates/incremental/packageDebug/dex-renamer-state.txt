@@ -1,0 +1,7 @@
+#Tue Jun 27 16:39:34 CST 2017
+base.0=/home/stone/laboratory/leakcanarySample_androidStudio/RecordPlayActivity/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_270c7b7dfe20f3453b874dfc1e727770738dbbd8
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=/home/stone/laboratory/leakcanarySample_androidStudio/RecordPlayActivity/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_d43c7616abac32d5eaafc6e4341c4dc0bf88ff6f/classes.dex
+base.1=/home/stone/laboratory/leakcanarySample_androidStudio/RecordPlayActivity/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_d43c7616abac32d5eaafc6e4341c4dc0bf88ff6f
+file.0=/home/stone/laboratory/leakcanarySample_androidStudio/RecordPlayActivity/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_270c7b7dfe20f3453b874dfc1e727770738dbbd8/classes.dex
