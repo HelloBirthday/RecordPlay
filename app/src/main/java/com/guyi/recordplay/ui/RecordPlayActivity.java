@@ -29,23 +29,23 @@ public class RecordPlayActivity extends Activity implements OnClickListener
 	/**
 	 * 按钮
 	 */
-	private Button bt_exit;
+	private Button btExit;
 	/**
 	 * AudioRecord 写入缓冲区大小
 	 */
-	protected int m_in_buf_size;
+	protected int mInBufSize;
 	/**
 	 * 录制音频对象
 	 */
-	private AudioRecord m_in_rec;
+	private AudioRecord audioRecord;
 	/**
 	 * 录入的字节数组
 	 */
-	private byte[] m_in_bytes;
+	private byte[] mInBytes;
 	/**
 	 * 存放录入字节数组的大小
 	 */
-	private LinkedList<byte[]> m_in_q;
+	private LinkedList<byte[]> mInQ;
 	/**
 	 * AudioTrack 播放缓冲大小
 	 */
@@ -53,11 +53,11 @@ public class RecordPlayActivity extends Activity implements OnClickListener
 	/**
 	 * 播放音频对象
 	 */
-	private AudioTrack m_out_trk;
+	private AudioTrack audioTrack;
 	/**
 	 * 播放的字节数组
 	 */
-	private byte[] m_out_bytes;
+	private byte[] mOutBytes;
 	/**
 	 * 录制音频线程
 	 */
@@ -80,7 +80,7 @@ public class RecordPlayActivity extends Activity implements OnClickListener
 		this.setTitle("音频回路");
 		
 		Log.d("dfdfd", "333333333333");
-		
+
 		init();
 		record = new Thread(new recordSound());
 		play = new Thread(new playRecord());
@@ -92,34 +92,34 @@ public class RecordPlayActivity extends Activity implements OnClickListener
 
 	private void init()
 	{
-		bt_exit = (Button) findViewById(R.id.bt_yinpinhuilu_testing_exit);
-		Log.i(TAG, "bt_exit====" + bt_exit);
-		
-		bt_exit.setOnClickListener(this);
+		btExit = (Button) findViewById(R.id.bt_yinpinhuilu_testing_exit);
+		Log.i(TAG, "bt_exit====" + btExit);
+
+		btExit.setOnClickListener(this);
 		// AudioRecord 得到录制最小缓冲区的大小
-		m_in_buf_size = AudioRecord.getMinBufferSize(8000,
+		mInBufSize = AudioRecord.getMinBufferSize(8000,
 				AudioFormat.CHANNEL_CONFIGURATION_MONO,
 				AudioFormat.ENCODING_PCM_16BIT);
 		// 实例化播放音频对象
-		m_in_rec = new AudioRecord(MediaRecorder.AudioSource.MIC, 8000,
+		audioRecord = new AudioRecord(MediaRecorder.AudioSource.VOICE_COMMUNICATION, 8000,
 				AudioFormat.CHANNEL_CONFIGURATION_MONO,
-				AudioFormat.ENCODING_PCM_16BIT, m_in_buf_size);
+				AudioFormat.ENCODING_PCM_16BIT, mInBufSize);
 		// 实例化一个字节数组，长度为最小缓冲区的长度
-		m_in_bytes = new byte[m_in_buf_size];
+		mInBytes = new byte[mInBufSize];
 		// 实例化一个链表，用来存放字节组数
-		m_in_q = new LinkedList<byte[]>();
+		mInQ = new LinkedList<byte[]>();
 
 		// AudioTrack 得到播放最小缓冲区的大小
 		m_out_buf_size = AudioTrack.getMinBufferSize(8000,
 				AudioFormat.CHANNEL_CONFIGURATION_MONO,
 				AudioFormat.ENCODING_PCM_16BIT);
 		// 实例化播放音频对象
-		m_out_trk = new AudioTrack(AudioManager.STREAM_MUSIC, 8000,
+		audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, 8000,
 				AudioFormat.CHANNEL_CONFIGURATION_MONO,
 				AudioFormat.ENCODING_PCM_16BIT, m_out_buf_size,
 				AudioTrack.MODE_STREAM);
 		// 实例化一个长度为播放最小缓冲大小的字节数组
-		m_out_bytes = new byte[m_out_buf_size];
+		mOutBytes = new byte[m_out_buf_size];
 	}
 
 	public void onClick(View v)
@@ -130,10 +130,10 @@ public class RecordPlayActivity extends Activity implements OnClickListener
 
 		case R.id.bt_yinpinhuilu_testing_exit:
 			flag = false;
-			m_in_rec.stop();
-			m_in_rec = null;
-			m_out_trk.stop();
-			m_out_trk = null;
+			audioRecord.stop();
+			audioRecord = null;
+			audioTrack.stop();
+			audioTrack = null;
 			this.finish();
 		}
 	}
@@ -154,18 +154,18 @@ public class RecordPlayActivity extends Activity implements OnClickListener
 			Log.i(TAG, "........recordSound run()......");
 			byte[] bytes_pkg;
 			// 开始录音
-			m_in_rec.startRecording();
+			audioRecord.startRecording();
 
 			while (flag)
 			{
-				m_in_rec.read(m_in_bytes, 0, m_in_buf_size);
-				bytes_pkg = m_in_bytes.clone();
+				audioRecord.read(mInBytes, 0, mInBufSize);
+				bytes_pkg = mInBytes.clone();
 				Log.i(TAG, "........recordSound bytes_pkg==" + bytes_pkg.length);
-				if (m_in_q.size() >= 2)
+				if (mInQ.size() >= 2)
 				{
-					m_in_q.removeFirst();
+					mInQ.removeFirst();
 				}
-				m_in_q.add(bytes_pkg);
+				mInQ.add(bytes_pkg);
 			}
 		}
 
@@ -188,15 +188,15 @@ public class RecordPlayActivity extends Activity implements OnClickListener
 			Log.i(TAG, "........playRecord run()......");
 			byte[] bytes_pkg = null;
 			// 开始播放
-			m_out_trk.play();
+			audioTrack.play();
 
 			while (flag)
 			{
 				try
 				{
-					m_out_bytes = m_in_q.getFirst();
-					bytes_pkg = m_out_bytes.clone();
-					m_out_trk.write(bytes_pkg, 0, bytes_pkg.length);
+					mOutBytes = mInQ.getFirst();
+					bytes_pkg = mOutBytes.clone();
+					audioTrack.write(bytes_pkg, 0, bytes_pkg.length);
 				} catch (Exception e)
 				{
 					e.printStackTrace();

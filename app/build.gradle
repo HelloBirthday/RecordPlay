@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 8
+    compileSdkVersion 22
     buildToolsVersion "25.0.3"
 
     defaultConfig {
         applicationId "com.guyi.recordplay.ui"
         minSdkVersion 8
-        targetSdkVersion 8
+        targetSdkVersion 22
     }
 
     buildTypes {
