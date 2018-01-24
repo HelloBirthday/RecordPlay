@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 android {
     compileSdkVersion 22
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.guyi.recordplay.ui"
@@ -16,13 +16,13 @@ android {
     signingConfigs {
         release {
             // 下面各值的意思将在后续进行讲解
-            storeFile file('app/demo')
+            storeFile file('demo')
             storePassword "54264586"
             keyAlias "demo"
             keyPassword "54264586"
         }
         debug {
-            storeFile file('app/demo')
+            storeFile file('demo')
             storePassword "54264586"
             keyAlias "demo"
             keyPassword "54264586"
@@ -39,6 +39,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
         debug {
