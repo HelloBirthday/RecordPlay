@@ -14,10 +14,38 @@ android {
         abortOnError false
     }
 
+    signingConfigs {
+        release {
+            // 下面各值的意思将在后续进行讲解
+            storeFile file('demo')
+            storePassword "54264586"
+            keyAlias "demo"
+            keyPassword "54264586"
+        }
+        debug {
+            storeFile file('demo')
+            storePassword "54264586"
+            keyAlias "demo"
+            keyPassword "54264586"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+        debug {
+//            minifyEnabled true
+//            shrinkResources true
+            signingConfig signingConfigs.debug
         }
     }
 }
